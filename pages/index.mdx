@@ -1,0 +1,64 @@
+# Happy Birthday application bug solution proposal
+
+---
+
+## Bruno Moutinho
+
+Hello, Bitovians :D
+
+I am happy to participate in this process and I thank you for this opportunity. I hope we can share as much as possible during the selection process!
+
+Namarië!
+
+---
+
+## The problem
+
+The Happy Birthday application sends celebratory e-mails to a person's email on their birthday.
+
+Initially, the service would only allow a single birthday to be saved at a time, but recently a change has been made to allow the user to insert multiple birthdays, one after the other, in the client. After this change, it has been reported that only the last birthday inserted in a batch by the user was being saved.
+
+---
+
+## Analysis
+
+### Root cause
+
+Since the application saves all the information globally, the most probable cause is that each new birthday inserted by the user is overriding the one before it. When the user finishes adding all birthdays and press the submit button, only the last one is sent to the API.
+
+### Solution proposals
+
+The core of the solution is simple. We need to save the information the user provided somewhere before we allow him/her to add another birthday. From an application architecture perspective, there are two different solutions:
+
+1. Each time the user inputs a new birthday, directly save the information in the backend; or
+1. Accumulate all birthdays the user provided in another variable and, when the user finishes adding all, send all of them to the backend.
+
+#### Solution 1
+
+_Description_: Each time the user inputs a new birthday, directly save the information in the backend
+
+_Pros_: The change is really simple, since all that needs to be done is to add the API call with the current information when the user finishes adding one birthday.
+
+_Cons_: There are more network calls. Since it is important for the user to get feedback on the actions he/she is taking, the process will take more time. Also, since each network call has minimum packet sizes, we consume more network resources.
+
+#### Solution 2
+
+_Description_: Accumulate all birthdays the user provided in another variable and, when the user finishes adding all, send all of them to the backend
+
+_Pros_: We keep the amount of network calls while maintaining the current user experience. It also is easier for us to add a functionality to show the user all birthdays he/she is adding so that they can have feedback on what has been done so far.
+
+_Cons_: The API must be changed to accept a list of birthdays.
+
+### Moving forward
+
+From my professional perspective, we should move forward with the implementation of solution 2. This solution is more flexible with the information, allowing us to have different improvements to user experience when using the application while saving internet connection. If the first solution was used in a country with poor internet connections, multiple API calls could be too expensive to allow for continuous use.
+
+Some user experience improvements that could be done in the future and would be supported by the solution include, but are not limited to:
+
+* show the user what has been added and is not yet saved so that he/she can see if someone was forgotten;
+* editing a birthday that was added and not saved yet;
+* remove a birthday from the list before sending to the API.
+
+### Final comments
+
+I also advise the inclusion of automated integration tests for the most important use case scenarios. These tests do not need to actually call the API, but can use a simple mock that will check the format of the information sent. Having such tests in place could prevent a bug like this one from surfacing in the future.
