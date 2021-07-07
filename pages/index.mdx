@@ -1,3 +1,8 @@
+import { Highlighter } from '../components/highlighter'
+import { api } from '../codeSnippets/api.js'
+import { birthday } from '../codeSnippets/birthday.js'
+import { store } from '../codeSnippets/store.js'
+
 # Happy Birthday application bug solution proposal
 
 ---
@@ -25,6 +30,16 @@ Initially, the service would only allow a single birthday to be saved at a time,
 ### Root cause
 
 Since the application saves all the information globally, the most probable cause is that each new birthday inserted by the user is overriding the one before it. When the user finishes adding all birthdays and press the submit button, only the last one is sent to the API.
+
+An example of code that could cause this is below:
+
+<Highlighter code={api} />
+
+<Highlighter code={birthday} />
+
+<Highlighter code={store} />
+
+As is seen above, when we run `createBirthdayWizard`, we never save the information we have on the store and end up overriding it.
 
 ### Solution proposals
 
