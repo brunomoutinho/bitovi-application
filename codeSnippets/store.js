@@ -60,3 +60,59 @@ function saveAndCreateBirthdayWizard() {
   }
 }
 `;
+
+export const storeSolution2 = `
+/**
+ * Creating just the new actions
+ */
+function addBirthdayAndCreateBirthdayWizard() {
+  return (dispatch) => {
+    dispatch(addBirthday())
+    dispatch(createBirthdayWizard())
+  }
+}
+
+function addBirthday() {
+  return (dispatch, getStore) => {
+    const birthday = getCurrentBirthday(getStore())
+    dispatch(saveCurrentBirthdayLocally(birthday))
+  }
+}
+
+function saveCurrentBirthdayLocally(birthday) {
+  return {
+    type: "SAVE_CURRENT_BIRTHDAY_LOCALLY",
+    payload: birthday
+  }
+}
+
+function saveAllBirthdays() {
+  return (dispatch, getStore) => {
+    const birthdays = getAllBirthdays(getStore())
+    submit(birthdays)
+      .then(response => dispatch(successBirthdayAdded()))
+      .catch(error => {
+        console.error(\`Error: \${JSON.stringify(error)}\`)
+        dispatch(errorBirthdayNotAdded())
+      })
+  }
+}
+
+export function store(state, action) {
+  switch(action.type) {
+    // other handlers
+    "SAVE_CURRENT_BIRTHDAY_LOCALLY": {
+      const birthdays = [...state.birthdays, action.birthday]
+      return { ...state, birthdays }
+    }
+  }
+}
+
+function getCurrentBirthday(store) {
+  return store.birthdayData
+}
+
+function getAllBirthdays(store) {
+  return store.birthdays
+}
+`;

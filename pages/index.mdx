@@ -1,7 +1,11 @@
 import { Highlighter } from '../components/highlighter';
 import { api } from '../codeSnippets/api.js';
-import { birthday } from '../codeSnippets/birthday.js';
-import { store, storeSolution1 } from '../codeSnippets/store.js';
+import { birthday, birthdaySolution2 } from '../codeSnippets/birthday.js';
+import {
+  store,
+  storeSolution1,
+  storeSolution2,
+} from '../codeSnippets/store.js';
 
 # Happy Birthday application bug solution proposal
 
@@ -56,7 +60,7 @@ _Pros_: The change is really simple, since all that needs to be done is to add t
 
 _Cons_: There are more network calls. Since it is important for the user to get feedback on the actions he/she is taking, the process will take more time. Also, since each network call has minimum packet sizes, we consume more network resources.
 
-The following code shows an action that could be created to solve this:
+The following code shows how this could be achieved:
 
 <Highlighter code={storeSolution1} />
 
@@ -67,6 +71,11 @@ _Description_: Accumulate all birthdays the user provided in another variable an
 _Pros_: We keep the amount of network calls while maintaining the current user experience. It also is easier for us to add a functionality to show the user all birthdays he/she is adding so that they can have feedback on what has been done so far.
 
 _Cons_: The API must be changed to accept a list of birthdays.
+
+The following code shows how this could be achieved:
+
+<Highlighter code={birthdaySolution2} />
+<Highlighter code={storeSolution2} />
 
 ### Moving forward
 
