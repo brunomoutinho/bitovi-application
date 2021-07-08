@@ -41,3 +41,22 @@ function selectBirthdayData(store) {
   return store.birthdayData
 }
 `;
+
+export const storeSolution1 = `
+/**
+ * Creating a new action to both save the birthday
+ * and create a the birthday wizard.
+ */
+function saveAndCreateBirthdayWizard() {
+  return (dispatch, getState) => {
+    const birthdayData = getBirthdayData(getState())
+    submit(birthdayData)
+      .then(response => dispatch(successBirthdayAdded()))
+      .then(() => dispatch(createBirthdayWizard()))
+      .catch(error => {
+        console.error(\`Error: \${JSON.stringify(error)}\`)
+        dispatch(errorBirthdayNotAdded())
+      })
+  }
+}
+`;

@@ -1,7 +1,7 @@
-import { Highlighter } from '../components/highlighter'
-import { api } from '../codeSnippets/api.js'
-import { birthday } from '../codeSnippets/birthday.js'
-import { store } from '../codeSnippets/store.js'
+import { Highlighter } from '../components/highlighter';
+import { api } from '../codeSnippets/api.js';
+import { birthday } from '../codeSnippets/birthday.js';
+import { store, storeSolution1 } from '../codeSnippets/store.js';
 
 # Happy Birthday application bug solution proposal
 
@@ -56,6 +56,10 @@ _Pros_: The change is really simple, since all that needs to be done is to add t
 
 _Cons_: There are more network calls. Since it is important for the user to get feedback on the actions he/she is taking, the process will take more time. Also, since each network call has minimum packet sizes, we consume more network resources.
 
+The following code shows an action that could be created to solve this:
+
+<Highlighter code={storeSolution1} />
+
 #### Solution 2
 
 _Description_: Accumulate all birthdays the user provided in another variable and, when the user finishes adding all, send all of them to the backend
@@ -70,9 +74,9 @@ From my professional perspective, we should move forward with the implementation
 
 Some user experience improvements that could be done in the future and would be supported by the solution include, but are not limited to:
 
-* show the user what has been added and is not yet saved so that he/she can see if someone was forgotten;
-* editing a birthday that was added and not saved yet;
-* remove a birthday from the list before sending to the API.
+- show the user what has been added and is not yet saved so that he/she can see if someone was forgotten;
+- editing a birthday that was added and not saved yet;
+- remove a birthday from the list before sending to the API.
 
 ### Final comments
 
